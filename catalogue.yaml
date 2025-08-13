@@ -33,3 +33,4 @@
       ansible.builtin.unarchive:
         src: /app/catalogue.zip
         dest: /app
+        remote_src: yes  # This means file already exists in this particular server.
