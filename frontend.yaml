@@ -1,6 +1,6 @@
 - name: Configuring Frontend service
   become: yes
-  hosts: Frontend
+  hosts: frontend
   tasks: 
     - name: Disable default nginx
       ansible.builtin.command: dnf module disable nginx -y
@@ -19,7 +19,7 @@
         state: started
         enabled: yes
       
-    - name: Removing default nginx configuration 
+    - name: Removing the default content the webserver is serving 
       ansible.builtin.file:
         path: /usr/share/nginx/html
         state: absent
@@ -39,6 +39,22 @@
         src: /tmp/frontend.zip
         dest: /usr/share/nginx/html
         remote_src: yes  # This means file already exists in this particular server.
+
+    - name: Remove default nginx configuration
+      ansible.builtin.file:
+        path: /etc/nginx/nginx.conf
+        state: absent
+    
+    - name: Copy roboshop nginx conf
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: Restart nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
 
     
         
