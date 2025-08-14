@@ -46,7 +46,7 @@
         dest: /etc/systemd/system/shipping.service
 
     - name: systemctl daemon-reload
-      ansbile.builtin.systemd_service:
+      ansible.builtin.systemd_service:
         daemon_reload: yes
 
     - name: Enable & Start the Shipping service
@@ -63,20 +63,20 @@
       - PyMySQL
       - cryptography
 
-    - name: Connect to mysql app user
-      community.mysql.mysql_info:
-        login_user: shipping
-        login_password: RoboShop@1
-        login_host: mysql.easydevop.fun
-        login_db: cities
+    # - name: Connect to mysql app user
+    #   community.mysql.mysql_info:
+    #     login_user: shipping
+    #     login_password: RoboShop@1
+    #     login_host: mysql.easydevops.fun
+    #     login_db: cities
 
     - name: Import the data
       community.mysql.mysql_db:
         name: all
         login_user: root
         login_password: Roboshop@1
-        login_host: mysql.easydevop.fun
-        state: Import
+        login_host: mysql.easydevops.fun
+        state: import
         target: "{{ item }}"
       loop:
       - /app/db/schema.sql
