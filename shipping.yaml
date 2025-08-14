@@ -71,6 +71,8 @@
     #     login_db: cities
 
     - name: Import the data
+      tags:
+        import
       community.mysql.mysql_db:
         name: all
         login_user: root
