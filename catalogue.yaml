@@ -37,7 +37,7 @@
 
     - name: Install nodejs application dependencies
       community.general.npm:
-        path: /app/catalogue
+        path: /app
 
     - name: Copy catalogue systemd service file
       ansible.builtin.copy:
