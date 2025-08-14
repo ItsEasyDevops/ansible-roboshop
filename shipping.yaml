@@ -4,8 +4,11 @@
   tasks:
     - name: Install maven
       ansible.builtin.dnf:
-        name: maven
+        name: "{{ item }}"
         state: installed
+      loop: 
+      - maven
+      - mysql
 
     - name: Create roboshop system user
       ansible.builtin.user:
@@ -52,6 +55,35 @@
         state: started
         enabled: yes
 
+    - name: Install PyMySQL
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        executable: pip3.9
+      loop:
+      - PyMySQL
+      - cryptography
 
+    - name: Connect to mysql app user
+      community.mysql.mysql_info:
+        login_user: shipping
+        login_password: RoboShop@1
+        login_host: mysql.easydevop.fun
+        login_db: cities
 
+    - name: Import the data
+      community.mysql.mysql_db:
+        name: all
+        login_user: root
+        login_password: Roboshop@1
+        login_host: mysql.easydevop.fun
+        state: Import
+        target: "{{ item }}"
+      loop:
+      - /app/db/schema.sql
+      - /app/db/app-user.sql
+      - /app/db/master-data.sql
 
+    - name: Restart Shipping service
+      ansible.builtin.service:
+        name: shipping
+        state: restarted
