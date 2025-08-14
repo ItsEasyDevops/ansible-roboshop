@@ -27,11 +27,11 @@
     - name: Download catalogue application
       ansible.builtin.get_url:
         url: "https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip"
-        dest: /app/catalogue.zip
+        dest: /app/tmp/catalogue.zip
 
     - name: Unzip application
       ansible.builtin.unarchive:
-        src: /app/catalogue.zip
+        src: /app/tmp/catalogue.zip
         dest: /app
         remote_src: yes  # This means file already exists in this particular server.
 
@@ -54,6 +54,6 @@
         name: catalogue
         state: started
         enabled: yes
-        
+
      
 
