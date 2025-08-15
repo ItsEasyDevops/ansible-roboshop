@@ -12,7 +12,7 @@
       - python3-devel
 
     - name: Create roboshop system user
-      ansible.builtin.systemd_service:
+      ansible.builtin.user:
         name: roboshop
         shell: /sbin/nologin
         home: /app
@@ -24,7 +24,7 @@
 
     - name: Download Payment application
       ansible.builtin.get_url:
-        src: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip
+        url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip
         dest: /tmp/payment.zip
 
     - name: Unzip application
