@@ -18,21 +18,15 @@
         state: started
         enabled: yes
 
-    - name: Ensure roboshop user exists
+    - name: Create rabbitmq user and set pemissions
       community.rabbitmq.rabbitmq_user:
         user: roboshop
         password: roboshop123
-        state: present
-        tags: []
-
-    - name: Set permissions for roboshop user
-      community.rabbitmq.rabbitmq_user:
-        user: roboshop
         permissions:
           - vhost: /
-            configure_priv: ".*"
-            read_priv: ".*"
-            write_priv: ".*"
+            configure_priv: .*
+            read_priv: .*
+            write_priv: .*
         state: present
 
         
